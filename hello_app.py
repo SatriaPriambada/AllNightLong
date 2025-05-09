@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import scrolledtext
 import pandas as pd
+from dependency.test import dep
 
 
 def show_dataframe():
@@ -26,5 +27,5 @@ button.pack(pady=10)
 
 output = scrolledtext.ScrolledText(root, width=50, height=10)
 output.pack(padx=10, pady=10)
-
+dep()
 root.mainloop()

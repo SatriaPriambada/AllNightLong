@@ -1,9 +1,9 @@
-name: Build Windows Installer
+name: Build MSI Installer
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -20,20 +20,24 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pandas pyinstaller
+          pip install pyinstaller pandas
 
-      - name: Build with PyInstaller
+      - name: Build .exe with PyInstaller
         run: |
           pyinstaller --windowed --name hello_app hello_app.py
 
-      - name: Install Inno Setup
-        run: choco install innosetup --yes
+      - name: Install WiX Toolset
+        run: |
+          choco install wixtoolset --yes
+        shell: powershell
 
-      - name: Create Installer with Inno Setup
-        run: iscc setup_script.iss
+      - name: Build MSI
+        run: |
+          candle hello.wxs
+          light hello.wixobj -o HelloAppInstaller.msi
 
-      - name: Upload Installer Artifact
+      - name: Upload MSI Installer
         uses: actions/upload-artifact@v4
         with:
           name: HelloAppInstaller
-          path: HelloAppInstaller.exe
+          path: HelloAppInstaller.msi
