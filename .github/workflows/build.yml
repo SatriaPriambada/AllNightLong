@@ -39,7 +39,7 @@ jobs:
       - name: Build MSI
         run: |
           echo "Running candle..."
-          candle hello.wxs || (echo "Candle failed" && dir && exit 1)
+          candle wix_msi.wxs || (echo "Candle failed" && dir && exit 1)
 
           echo "Checking for output .wixobj..."
           dir
