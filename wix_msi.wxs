@@ -6,6 +6,7 @@
     <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes" />
     <Feature Id="ProductFeature" Title="HelloApp" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="DesktopShortcut" />
     </Feature>
   </Product>
 
@@ -14,14 +15,36 @@
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="HelloApp" />
       </Directory>
+      <Directory Id="DesktopFolder" />
     </Directory>
   </Fragment>
 
   <Fragment>
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <Component Id="MainExecutable" Guid="*">
-        <File Id="HelloExe" Name="hello_app.exe" Source="dist\hello_app\hello_app.exe" KeyPath="yes" />
+        <File Id="HelloExe" Name="hello_app.exe" Source="dist\\hello_app\\hello_app.exe" KeyPath="yes" />
       </Component>
     </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="DesktopShortcut" Guid="*">
+        <Shortcut Id="DesktopShortcut"
+                  Name="Hello App"
+                  Description="A simple hello app"
+                  Target="[INSTALLFOLDER]hello_app.exe"
+                  WorkingDirectory="INSTALLFOLDER" />
+        <RemoveFile Id="RemoveDesktopShortcut"
+                    Name="Hello App.lnk"
+                    On="uninstall" />
+        <RegistryValue Root="HKCU"
+                       Key="Software\\HelloApp"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
   </Fragment>
 </Wix>
