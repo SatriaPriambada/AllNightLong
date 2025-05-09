@@ -33,7 +33,7 @@ jobs:
 
       - name: Build MSI
         run: |
-          candle hello.wxs
+          candle wix_msi.wxs
           light hello.wixobj -o HelloAppInstaller.msi
 
       - name: Upload MSI Installer
