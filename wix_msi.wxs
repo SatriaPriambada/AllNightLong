@@ -39,7 +39,7 @@
                     Name="Hello App.lnk"
                     On="uninstall" />
         <RegistryValue Root="HKCU"
-                       Key="Software\\HelloApp"
+                       Key="SoftwareHelloApp"
                        Name="installed"
                        Type="integer"
                        Value="1"
