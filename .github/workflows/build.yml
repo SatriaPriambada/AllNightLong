@@ -25,7 +25,12 @@ jobs:
       - name: Build .exe with PyInstaller
         run: |
           pyinstaller --windowed --name hello_app hello_app.py
-
+      - name: Check for PyInstaller output
+        run: |
+          echo "Listing dist folder:"
+          dir dist
+          echo "Listing dist/hello_app folder:"
+          dir dist\hello_app
       - name: Install WiX Toolset
         run: |
           choco install wixtoolset --yes
@@ -33,6 +38,14 @@ jobs:
 
       - name: Build MSI
         run: |
+          echo "Running candle..."
+          candle hello.wxs || (echo "Candle failed" && dir && exit 1)
+
+          echo "Checking for output .wixobj..."
+          dir
+
+          echo "Running light..."
+
           candle wix_msi.wxs
           light hello.wixobj -o HelloAppInstaller.msi
 
